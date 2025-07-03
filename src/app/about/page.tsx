@@ -6,7 +6,7 @@ export default function AboutPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg text-gray-700">
 
         <div>
-          👋 Hi, I'm <span className="font-semibold">Abdullah Mansoor</span>, a dedicated and curious Computer Engineering student at the 
+          👋 Hi, I'm <span className="font-semibold">Abdullah Mansoor</span>, a dedicated and curious Computer Science student at the 
           <span className="font-semibold"> Ghulam Ishaq Khan Institute of Engineering Sciences and Technology (GIKI)</span>. 
           With a strong foundation in programming, web development, and artificial intelligence, I’ve worked on a range of projects involving 
           <span className="font-semibold"> React</span>, <span className="font-semibold">Python</span>, and <span className="font-semibold">machine learning</span>.
