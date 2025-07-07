@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
 First, run the development server:
-
 ```bash
 npm run dev
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm run dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 📚 Quote Generator Web App
+A sleek and dynamic quote generator built as part of my internship at **Nexium**. Users can input any topic and receive three inspiring quotes fetched from a MongoDB Atlas backend.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Features
+- 🔍 Dynamic quote search via MongoDB Atlas
+- 🎨 Interactive UI with Next.js 15, Tailwind CSS, daisyUI, and ShadCN UI
+- 🚀 Deployed on Vercel
+- 🔁 Refresh quotes button for cycling through quotes
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚧 Tech Stack
+| Tech           | Purpose                          |
+|----------------|----------------------------------|
+| Next.js 15     | Fullstack React framework        |
+| Tailwind CSS   | Utility-first CSS framework      |
+| daisyUI        | Tailwind-based component library |
+| ShadCN UI      | Modern accessible components     |
+| MongoDB Atlas  | Cloud NoSQL database             |
+| Prisma         | Database ORM                     |
+| Vercel         | Deployment & Hosting             |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📁 Folder Structure
+/internship
+├── src/
+│ ├── app/
+│ │ ├── page.tsx – Main quote page
+│ │ ├── about/page.tsx – About page
+│ │ └── api/quotes/route.ts – API to fetch quotes
+│ ├── components/
+│ │ ├── NavBar.tsx – Navigation bar
+│ │ └── QuoteForm.tsx – Input form and quote display
+│ └── data/
+│ └── quotes.json – Local quote backup
+/scripts/
+└── insertQuotes.ts – Bulk upload script to MongoDB
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ⚙️ Getting Started
+### 1️⃣ Clone the Repo
+```bash
+git clone https://github.com/NOOBBoy35/Nexium_Abdullah_Assign1.git
+cd Nexium_Abdullah_Assign1/internship
+pnpm install
+
+
+💡 Usage Guide
+Visit homepage to enter a topic (e.g., "ambition")
+Click Generate to show quotes from the database
+Click the refresh 🔄 button to cycle through the 3 quotes
+Click About Us to view personal info and social links
+
+🌐 Live Demo
+Hosted on Vercel:
+👉https://nexium-abdullah-assign1.vercel.app
+
+📄 License
+This project is for educational & internship purposes. Please do not reuse without permission.
