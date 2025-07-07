@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -16,6 +16,39 @@ export default function QuoteForm() {
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (!topic) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+    if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = setTimeout(async () => {
+      const res = await fetch(`/api/quotes/suggest?q=${encodeURIComponent(topic)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setSuggestions(data.topics || []);
+        setShowSuggestions((data.topics || []).length > 0);
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }, 200);
+    return () => {
+      if (debounceTimeout.current) clearTimeout(debounceTimeout.current);
+    };
+  }, [topic]);
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setTopic(suggestion);
+    setShowSuggestions(false);
+    inputRef.current?.focus();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,15 +88,33 @@ export default function QuoteForm() {
     >
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col sm:flex-row gap-4 mb-10 items-center justify-center"
+        className="flex flex-col sm:flex-row gap-4 mb-10 items-center justify-center relative"
       >
-        <Input
-          type="text"
-          placeholder="Type a topic... (e.g. growth, fear, change)"
-          value={topic}
-          onChange={(e) => setTopic(e.target.value)}
-          className="text-2xl px-8 py-6 rounded-2xl shadow-lg border-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-purple-500 bg-white/10 backdrop-blur-md text-white placeholder:text-gray-300 min-w-[320px]"
-        />
+        <div className="w-full relative">
+          <Input
+            ref={inputRef}
+            type="text"
+            placeholder="Type a topic"
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            onFocus={() => setShowSuggestions(suggestions.length > 0)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
+            className="text-2xl px-8 py-6 rounded-2xl shadow-lg border-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-purple-500 bg-white/10 backdrop-blur-md text-white placeholder:text-gray-300 min-w-[320px]"
+          />
+          {showSuggestions && (
+            <ul className="absolute left-0 right-0 mt-2 bg-white/30 backdrop-blur-xl border border-white/20 shadow-2xl rounded-xl z-20 max-h-60 overflow-auto">
+              {suggestions.map((s) => (
+                <li
+                  key={s}
+                  onMouseDown={() => handleSuggestionClick(s)}
+                  className="px-6 py-3 text-lg text-gray-400 hover:bg-purple-100/60 cursor-pointer first:rounded-t-xl last:rounded-b-xl transition"
+                >
+                  {s}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
         <motion.div
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
