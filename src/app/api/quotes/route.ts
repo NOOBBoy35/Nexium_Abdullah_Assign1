@@ -16,9 +16,7 @@ export async function GET(req: NextRequest) {
         if (doc && doc.quotes && doc.quotes.length > 0) {
             return NextResponse.json({ quotes: doc.quotes.slice(0, 3) });
         }
-        // fallback: random quote
         const allDocsRaw = await collection.find().toArray();
-        // Collect all quotes from documents that have the correct shape
         const allQuotes: string[] = [];
         for (const d of allDocsRaw) {
             if (typeof d.topic === 'string' && Array.isArray(d.quotes)) {

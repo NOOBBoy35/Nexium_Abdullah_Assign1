@@ -1,14 +1,14 @@
 'use client';
 import { useEffect, useRef } from "react";
 
-const DOT_SPACING = 40; // px
+const DOT_SPACING = 40;
 const DOT_RADIUS = 3;
 const LINE_COLOR = "rgba(255,255,255,0.18)";
 const DOT_COLOR = "rgba(255,255,255,0.10)";
-const SNAKE_SPEED = 2; // px per frame
+const SNAKE_SPEED = 2;
 const SNAKE_WIDTH = 8;
-const TRAIL_FADE = 0.02; // how quickly the trail fades
-const SNAKE_INTERVAL = 1800; // ms between new snakes
+const TRAIL_FADE = 0.02;
+const SNAKE_INTERVAL = 1800;
 
 function getGrid(width: number, height: number) {
     const cols = Math.floor(width / DOT_SPACING);
