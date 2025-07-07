@@ -43,14 +43,14 @@ pnpm install
 ```
 
 💡 Usage Guide
-Visit homepage to enter a topic (e.g., "ambition")
-Click Generate to show quotes from the database
-Click the refresh 🔄 button to cycle through the 3 quotes
-Click About Us to view personal info and social links
+- Visit homepage to enter a topic (e.g., "ambition")
+- Click Generate to show quotes from the database
+- Click the refresh 🔄 button to cycle through the 3 quotes
+- Click About Us to view personal info and social links
+---
 
-🌐 Live Demo
-Hosted on Vercel:
-👉https://nexium-abdullah-assign1.vercel.app
-
-📄 License
-This project is for educational & internship purposes. Please do not reuse without permission.
+🌐 Live Demo: 
+Hosted on Vercel:👉https://nexium-abdullah-assign1.vercel.app
+---
+📄 License:
+ This project is for educational & internship purposes. Please do not reuse without permission.
