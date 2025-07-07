@@ -5,15 +5,15 @@ export default function AboutPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg text-black leading-relaxed font-medium">
         <div>
-          👋 Hi, I'm <span className="font-semibold text-indigo-600">Abdullah Mansoor</span>, a dedicated and curious Computer Science student at the 
-          <span className="font-semibold text-indigo-600"> Ghulam Ishaq Khan Institute of Engineering Sciences and Technology (GIKI)</span>. 
-          With a strong foundation in programming, web development, and artificial intelligence, I’ve worked on a range of projects involving 
+          👋 Hi, I&apos;m <span className="font-semibold text-indigo-600">Abdullah Mansoor</span>, a dedicated and curious Computer Science student at the
+          <span className="font-semibold text-indigo-600"> Ghulam Ishaq Khan Institute of Engineering Sciences and Technology (GIKI)</span>.
+          With a strong foundation in programming, web development, and artificial intelligence, I&#39;ve worked on a range of projects involving
           <span className="font-semibold text-indigo-600"> React</span>, <span className="font-semibold text-indigo-600">Python</span>, and <span className="font-semibold text-indigo-600">machine learning</span>.
         </div>
 
         <div>
-          🛠️ This website is part of my internship at <span className="font-semibold text-indigo-600">Nexium</span>, where I’m learning to build full-stack applications using modern tools like 
-          <span className="font-semibold text-indigo-600"> Next.js</span>, <span className="font-semibold text-indigo-600">Tailwind CSS</span>, <span className="font-semibold text-indigo-600">Supabase</span>, and <span className="font-semibold text-indigo-600">MongoDB Atlas</span>. 
+          🛠️ This website is part of my internship at <span className="font-semibold text-indigo-600">Nexium</span>, where I&#39;m learning to build full-stack applications using modern tools like
+          <span className="font-semibold text-indigo-600"> Next.js</span>, <span className="font-semibold text-indigo-600">Tailwind CSS</span>, <span className="font-semibold text-indigo-600">Supabase</span>, and <span className="font-semibold text-indigo-600">MongoDB Atlas</span>.
           The goal of this project is not just to build a quote generator, but to improve my understanding of clean UI, component-based architecture, and efficient backend integration.
         </div>
       </div>

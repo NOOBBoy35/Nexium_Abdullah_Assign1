@@ -26,8 +26,12 @@ export default function QuoteForm() {
       const data = await res.json();
       setQuotes(data.quotes || []);
       setIndex(0);
-    } catch (err: any) {
-      setError(err.message || 'Unknown error');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Unknown error');
+      }
     } finally {
       setLoading(false);
     }

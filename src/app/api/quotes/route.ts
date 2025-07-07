@@ -17,8 +17,14 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ quotes: doc.quotes.slice(0, 3) });
         }
         // fallback: random quote
-        const allDocs = await collection.find().toArray();
-        const allQuotes = allDocs.flatMap((d: any) => d.quotes);
+        const allDocsRaw = await collection.find().toArray();
+        // Collect all quotes from documents that have the correct shape
+        const allQuotes: string[] = [];
+        for (const d of allDocsRaw) {
+            if (typeof d.topic === 'string' && Array.isArray(d.quotes)) {
+                allQuotes.push(...d.quotes);
+            }
+        }
         if (allQuotes.length === 0) {
             return NextResponse.json({ quotes: [`No quotes found in the database.`] });
         }
