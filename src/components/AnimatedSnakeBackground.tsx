@@ -25,27 +25,16 @@ function getGrid(width: number, height: number) {
     return dots;
 }
 
-function findNearestDot(from: { x: number; y: number }, dots: { x: number; y: number }[], visited: Set<number>) {
-    let minDist = Infinity;
-    let nearest = -1;
-    for (let i = 0; i < dots.length; i++) {
-        if (visited.has(i)) continue;
-        const dx = from.x - dots[i].x;
-        const dy = from.y - dots[i].y;
-        const dist = dx * dx + dy * dy;
-        if (dist < minDist) {
-            minDist = dist;
-            nearest = i;
-        }
-    }
-    return nearest;
-}
+type Snake = {
+    path: { x: number; y: number }[];
+    progress: number;
+    fade: number;
+};
 
 const AnimatedSnakeBackground = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const animationRef = useRef<number>();
-    const snakesRef = useRef<any[]>([]);
-    const lastSnakeTime = useRef<number>(0);
+    const animationRef = useRef<number | null>(null);
+    const snakesRef = useRef<Snake[]>([]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -94,7 +83,7 @@ const AnimatedSnakeBackground = () => {
             let current = start;
             const visited = new Set<number>();
             const path = [current];
-            let idx = dots.findIndex((d) => d.x === current.x && d.y === current.y);
+            const idx = dots.findIndex((d) => d.x === current.x && d.y === current.y);
             visited.add(idx);
             // Build a random walk path for a long distance
             for (let i = 0; i < 80; i++) {
@@ -183,7 +172,7 @@ const AnimatedSnakeBackground = () => {
             animationRef.current = requestAnimationFrame(animate);
         }
 
-        let snakeTimer = setInterval(spawnSnake, SNAKE_INTERVAL);
+        const snakeTimer = setInterval(spawnSnake, SNAKE_INTERVAL);
         spawnSnake();
         animationRef.current = requestAnimationFrame(animate);
 
