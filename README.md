@@ -40,7 +40,7 @@ A sleek and dynamic quote generator built as part of my internship at **Nexium**
 git clone https://github.com/NOOBBoy35/Nexium_Abdullah_Assign1.git
 cd Nexium_Abdullah_Assign1/internship
 pnpm install
-
+```
 
 💡 Usage Guide
 Visit homepage to enter a topic (e.g., "ambition")
