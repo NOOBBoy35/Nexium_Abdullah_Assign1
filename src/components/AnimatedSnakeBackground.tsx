@@ -85,9 +85,15 @@ const AnimatedSnakeBackground = () => {
             const path = [current];
             const idx = dots.findIndex((d) => d.x === current.x && d.y === current.y);
             visited.add(idx);
+            // Determine the starting edge
+            let startingEdge: 'left' | 'right' | 'top' | 'bottom';
+            if (start.x < DOT_SPACING * 1.5) startingEdge = 'left';
+            else if (start.x > width - DOT_SPACING * 1.5) startingEdge = 'right';
+            else if (start.y < DOT_SPACING * 1.5) startingEdge = 'top';
+            else startingEdge = 'bottom';
             // Build a random walk path for a long distance
-            for (let i = 0; i < 80; i++) {
-                // Only allow straight (no diagonal) moves
+            for (let i = 0; i < 400; i++) {
+                // Only allow straight (no diagonal) moves, and don't allow going back to the starting edge
                 const neighbors = dots
                     .map((dot, i) => ({ dot, i }))
                     .filter(({ dot, i }) => {
@@ -95,12 +101,19 @@ const AnimatedSnakeBackground = () => {
                         const dx = dot.x - current.x;
                         const dy = dot.y - current.y;
                         // Only allow up, down, left, right (no diagonals)
-                        return (
+                        const valid = (
                             (dx === DOT_SPACING && dy === 0) ||
                             (dx === -DOT_SPACING && dy === 0) ||
                             (dx === 0 && dy === DOT_SPACING) ||
                             (dx === 0 && dy === -DOT_SPACING)
                         );
+                        if (!valid) return false;
+                        // Prevent going back to the starting edge
+                        if (startingEdge === 'left' && dot.x < DOT_SPACING * 1.5) return false;
+                        if (startingEdge === 'right' && dot.x > width - DOT_SPACING * 1.5) return false;
+                        if (startingEdge === 'top' && dot.y < DOT_SPACING * 1.5) return false;
+                        if (startingEdge === 'bottom' && dot.y > height - DOT_SPACING * 1.5) return false;
+                        return true;
                     });
                 if (neighbors.length === 0) break;
                 // Pick a random neighbor
@@ -108,12 +121,12 @@ const AnimatedSnakeBackground = () => {
                 current = next.dot;
                 path.push(current);
                 visited.add(next.i);
-                // Stop if at edge
+                // Stop if at edge (but not the starting edge)
                 if (
-                    current.x < DOT_SPACING * 1.5 ||
-                    current.x > width - DOT_SPACING * 1.5 ||
-                    current.y < DOT_SPACING * 1.5 ||
-                    current.y > height - DOT_SPACING * 1.5
+                    (current.x < DOT_SPACING * 1.5 && startingEdge !== 'left') ||
+                    (current.x > width - DOT_SPACING * 1.5 && startingEdge !== 'right') ||
+                    (current.y < DOT_SPACING * 1.5 && startingEdge !== 'top') ||
+                    (current.y > height - DOT_SPACING * 1.5 && startingEdge !== 'bottom')
                 ) {
                     break;
                 }
@@ -169,11 +182,22 @@ const AnimatedSnakeBackground = () => {
             }
             // Remove faded snakes
             snakesRef.current = snakesRef.current.filter((s) => s.fade > 0);
+            // If any snakes finished, spawn new ones immediately to keep 6
+            if (snakesRef.current.length < 6) {
+                maintainSnakes();
+            }
             animationRef.current = requestAnimationFrame(animate);
         }
 
-        const snakeTimer = setInterval(spawnSnake, SNAKE_INTERVAL);
-        spawnSnake();
+        // Always keep 6 snakes on the screen
+        function maintainSnakes() {
+            while (snakesRef.current.length < 6) {
+                spawnSnake();
+            }
+        }
+
+        const snakeTimer = setInterval(maintainSnakes, SNAKE_INTERVAL);
+        maintainSnakes();
         animationRef.current = requestAnimationFrame(animate);
 
         return () => {
