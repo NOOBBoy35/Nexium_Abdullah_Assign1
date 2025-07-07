@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Geist_Mono } from "next/font/google";
+
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export default function QuoteForm() {
   const [topic, setTopic] = useState('');
@@ -44,7 +47,12 @@ export default function QuoteForm() {
   };
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.7 }}
+      className="p-8 max-w-2xl mx-auto"
+    >
       <form
         onSubmit={handleSubmit}
         className="flex flex-col sm:flex-row gap-4 mb-10 items-center justify-center"
@@ -54,7 +62,7 @@ export default function QuoteForm() {
           placeholder="Type a topic... (e.g. growth, fear, change)"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          className="text-lg px-6 py-4 rounded-xl shadow-lg border-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-purple-500"
+          className="text-2xl px-8 py-6 rounded-2xl shadow-lg border-2 border-gray-300 focus:outline-none focus:ring-4 focus:ring-purple-500 bg-white/10 backdrop-blur-md text-white placeholder:text-gray-300 min-w-[320px]"
         />
         <motion.div
           whileHover={{ scale: 1.05 }}
@@ -63,7 +71,7 @@ export default function QuoteForm() {
         >
           <Button
             type="submit"
-            className="bg-gradient-to-r from-indigo-500 to-purple-500 px-8 py-4 text-lg font-semibold rounded-xl shadow-md hover:shadow-xl transition duration-300"
+            className="bg-gradient-to-r from-indigo-500 to-purple-500 px-12 py-6 text-2xl font-bold rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 min-w-[180px]"
             disabled={loading}
           >
             {loading ? 'Loading...' : 'Generate'}
@@ -79,15 +87,20 @@ export default function QuoteForm() {
         {quotes.length > 0 && (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.4 }}
+            exit={{ opacity: 0, y: -40 }}
+            transition={{ duration: 0.5 }}
             className="relative"
           >
-            <Card className="p-6 text-center shadow-xl border-none bg-gradient-to-br from-gray-800 to-gray-700 text-white rounded-2xl">
-              <CardContent className="text-xl font-medium">
-                “{quotes[index]}”
+            <Card className="p-8 text-center shadow-2xl border border-purple-400/30 bg-white/10 backdrop-blur-lg text-white rounded-3xl transition-all duration-500">
+              <CardContent className="flex flex-col items-center">
+                <blockquote
+                  className={`text-2xl md:text-3xl font-semibold italic text-white drop-shadow-lg mb-2 ${geistMono.variable}`}
+                  style={{ fontFamily: 'var(--font-geist-mono), monospace' }}
+                >
+                  {quotes[index]}
+                </blockquote>
               </CardContent>
             </Card>
 
@@ -103,6 +116,6 @@ export default function QuoteForm() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 }

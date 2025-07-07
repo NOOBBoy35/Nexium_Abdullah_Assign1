@@ -3,7 +3,7 @@ export default function AboutPage() {
     <div className="p-8 max-w-5xl mx-auto">
       <h1 className="text-4xl font-bold mb-10 text-indigo-600 text-center">About Me</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg text-black leading-relaxed font-medium">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-lg text-gray-100 leading-relaxed font-medium">
         <div>
           👋 Hi, I&apos;m <span className="font-semibold text-indigo-600">Abdullah Mansoor</span>, a dedicated and curious Computer Science student at the
           <span className="font-semibold text-indigo-600"> Ghulam Ishaq Khan Institute of Engineering Sciences and Technology (GIKI)</span>.
