@@ -34,24 +34,6 @@ A sleek and dynamic quote generator built as part of my internship at **Nexium**
 
 ---
 
-## 📁 Folder Structure
-/internship
-├── src/
-│ ├── app/
-│ │ ├── page.tsx – Main quote page
-│ │ ├── about/page.tsx – About page
-│ │ └── api/quotes/route.ts – API to fetch quotes
-│ ├── components/
-│ │ ├── NavBar.tsx – Navigation bar
-│ │ └── QuoteForm.tsx – Input form and quote display
-│ └── data/
-│ └── quotes.json – Local quote backup
-/scripts/
-└── insertQuotes.ts – Bulk upload script to MongoDB
-
-
----
-
 ## ⚙️ Getting Started
 ### 1️⃣ Clone the Repo
 ```bash
