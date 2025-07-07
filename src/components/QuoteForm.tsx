@@ -6,18 +6,31 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { RotateCcw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getQuotesForTopic } from '@/lib/getquotes';
 
 export default function QuoteForm() {
   const [topic, setTopic] = useState('');
   const [quotes, setQuotes] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const results = getQuotesForTopic(topic);
-    setQuotes(results);
+    setLoading(true);
+    setError(null);
+    setQuotes([]);
     setIndex(0);
+    try {
+      const res = await fetch(`/api/quotes?topic=${encodeURIComponent(topic)}`);
+      if (!res.ok) throw new Error('Failed to fetch quotes');
+      const data = await res.json();
+      setQuotes(data.quotes || []);
+      setIndex(0);
+    } catch (err: any) {
+      setError(err.message || 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleNext = () => {
@@ -47,11 +60,16 @@ export default function QuoteForm() {
           <Button
             type="submit"
             className="bg-gradient-to-r from-indigo-500 to-purple-500 px-8 py-4 text-lg font-semibold rounded-xl shadow-md hover:shadow-xl transition duration-300"
+            disabled={loading}
           >
-            Generate
+            {loading ? 'Loading...' : 'Generate'}
           </Button>
         </motion.div>
       </form>
+
+      {error && (
+        <div className="text-red-500 text-center mb-4">{error}</div>
+      )}
 
       <AnimatePresence mode="wait">
         {quotes.length > 0 && (
