@@ -72,8 +72,8 @@ const AnimatedSnakeBackground = () => {
 
         // Snake logic
         function spawnSnake() {
-            // Only allow up to 6 snakes at a time
-            if (snakesRef.current.length >= 6) return;
+            // Only allow up to 12 snakes at a time
+            if (snakesRef.current.length >= 12) return;
             // Start at a random edge dot
             const edgeDots = dots.filter(
                 (d) => d.x < DOT_SPACING * 1.5 || d.x > width - DOT_SPACING * 1.5 || d.y < DOT_SPACING * 1.5 || d.y > height - DOT_SPACING * 1.5
@@ -182,16 +182,16 @@ const AnimatedSnakeBackground = () => {
             }
             // Remove faded snakes
             snakesRef.current = snakesRef.current.filter((s) => s.fade > 0);
-            // If any snakes finished, spawn new ones immediately to keep 6
-            if (snakesRef.current.length < 6) {
+            // If any snakes finished, spawn new ones immediately to keep 12
+            if (snakesRef.current.length < 12) {
                 maintainSnakes();
             }
             animationRef.current = requestAnimationFrame(animate);
         }
 
-        // Always keep 6 snakes on the screen
+        // Always keep 12 snakes on the screen
         function maintainSnakes() {
-            while (snakesRef.current.length < 6) {
+            while (snakesRef.current.length < 12) {
                 spawnSnake();
             }
         }
